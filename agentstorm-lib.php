@@ -91,7 +91,7 @@ class AgentStormFilter_Range implements AgentStormFilter {
     }
     
     function toString() {
-        return 'fgt_' . urlencode($this->field) . '=' . urlencode($this->min-1) . '&flt_' . urlencode($this->field) . '=' . urlencode($this->max+1); 
+        return urlencode($this->field) . '=' . urlencode($this->min-1) . ':' . urlencode($this->max+1); 
     }
     
 }
@@ -161,10 +161,7 @@ class AgentStormFilter_LessThan implements AgentStormFilter {
     }
     
     function toString() {
-        return 'fle_' . urlencode($this->field) . '=' . urlencode($this->value); 
-    }
-    
-}
+        return urlencode($this->field) . '=' . urlencode($this->value) . '-'
 
 /**
  * The AgentStormFilter_GreaterThan class specifies a filter to query a field with a GreaterThan operator.
@@ -184,7 +181,7 @@ class AgentStormFilter_GreaterThan implements AgentStormFilter {
     }
     
     function toString() {
-        return 'fge_' . urlencode($this->field) . '=' . urlencode($this->value); 
+        return urlencode($this->field) . '=' . urlencode($this->value) . '+'; 
     }
     
 }
@@ -207,7 +204,7 @@ class AgentStormFilter_Equals implements AgentStormFilter {
     }
     
     function toString() {
-        return 'feq_' .  urlencode($this->field) . '=' . urlencode($this->value);
+        return urlencode($this->field) . '=' . urlencode($this->value);
     }
     
 }
@@ -230,7 +227,7 @@ class AgentStormFilter_In implements AgentStormFilter {
     }
     
     function toString() {
-        return 'fin_' .  urlencode($this->field) . '=' . urlencode(join(',', $this->value));
+        return urlencode($this->field) . '=' . urlencode(join(',', $this->value));
     }
     
 }
