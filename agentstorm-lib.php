@@ -624,7 +624,11 @@ abstract class AgentStormRequest {
         
         switch ($response->status) {
             case 200:
-                return ($fi) ? json_decode($response->body) : $response->body;
+                if ($this->raw_mode == true) {
+                    return $response->body;
+                } else {
+                    return json_decode($response->body);
+                }
                 break;
         }
         
