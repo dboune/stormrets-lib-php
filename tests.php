@@ -9,14 +9,32 @@ if (!array_key_exists("h", $options) && !array_key_exists("h", $options)) {
     die();
 }
 
-$result = new AgentStormContactsEndpoint($options['h'], $options['k']);
-echo 'Contact Count: ' . $result->getAll()->Count . "/" . $result->getAll()->TotalCount . "\n";
+// Test Contacts
+//
+$obj = new AgentStormContactsEndpoint($options['h'], $options['k']);
+$result = $obj->getAll();
+echo 'Contact Count: ' . $result->Count . "/" . $result->TotalCount . "\n";
 
-$result = new AgentStormCompaniesEndpoint($options['h'], $options['k']);
-echo 'Company Count: ' . $result->getAll()->Count . "/" . $result->getAll()->TotalCount . "\n";
+// Test Companies
+//
+$obj = new AgentStormCompaniesEndpoint($options['h'], $options['k']);
+$result = $obj->getAll();
+echo 'Company Count: ' . $result->Count . "/" . $result->TotalCount . "\n";
 
-$result = new AgentStormPropertiesEndpoint($options['h'], $options['k']);
-echo 'Properties Count: ' . $result->getAll()->Count . "/" . $result->getAll()->TotalCount . "\n";
+// Test Properties
+//
+$obj = new AgentStormPropertiesEndpoint($options['h'], $options['k']);
+$result = $obj->getAll();
+echo 'Properties Count: ' . $result->Count . "/" . $result->TotalCount . "\n";
 
-$result = new AgentStormCitiesEndpoint($options['h'], $options['k']);
-echo 'City Count: ' . $result->getAll()->Count . "/" . $result->getAll()->TotalCount . "\n";
+// Cities
+$result = $obj->getCities();
+echo 'City Count: ' . $result->Count . "/" . $result->TotalCount . "\n";
+
+// Tags
+$result = $obj->getTags();
+echo 'Tag Count: ' . $result->Count . "/" . $result->TotalCount . "\n";
+
+// By Tag
+$result = $obj->getByTag('MRMLS');
+echo 'Property[MRMLS] Count: ' . $result->Count . "/" . $result->TotalCount . "\n";

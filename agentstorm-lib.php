@@ -161,7 +161,10 @@ class AgentStormFilter_LessThan implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value) . '-'
+        return urlencode($this->field) . '=' . urlencode($this->value) . '-';
+    }
+    
+}
 
 /**
  * The AgentStormFilter_GreaterThan class specifies a filter to query a field with a GreaterThan operator.
@@ -712,9 +715,32 @@ class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
+    
     function __construct($sub_domain, $apikey) {
         parent::__construct($sub_domain, $apikey, 'properties');
     }
+    
+    /**
+     * Cities Endpoint
+     */
+    public function getCities() {
+        return $this->request(sprintf('/%s/cities.json', $this->end_point), array());
+    }
+    
+    /**
+     * Get All Tags
+     */
+    public function getTags() {
+        return $this->request(sprintf('/%s/tags.json', $this->end_point), array());
+    }
+    
+    /**
+     * Get Properties tagged with $tag
+     */
+    public function getByTag($tag) {
+        return $this->request(sprintf('/%s/tags/%s.json', $this->end_point, $tag), array());
+    }
+    
 }
 
 /**
