@@ -595,13 +595,18 @@ abstract class AgentStormRequest {
      */
     private $service_url = '';
     
+    /**
+     * Whether to parse the return data or return as-is.
+     */
+    private $raw_mode = false;
     
     /**
      *
      */
-    function __construct($sub_domain, $api_key) {
+    function __construct($sub_domain, $api_key, $raw_mode = false) {
         $this->sub_domain = $sub_domain;
         $this->api_key = $api_key;
+        $this->raw_mode = $raw_mode;
     }
     
     
@@ -619,7 +624,7 @@ abstract class AgentStormRequest {
         
         switch ($response->status) {
             case 200:
-                return json_decode($response->body);
+                return ($fi) ? json_decode($response->body) : $response->body;
                 break;
         }
         
@@ -654,8 +659,8 @@ class AgentStormEndpoint extends AgentStormRequest {
     /**
      *
      */
-    function __construct($sub_domain, $apikey, $end_point) {
-        parent::__construct($sub_domain, $apikey);
+    function __construct($sub_domain, $apikey, $end_point, $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, $raw_mode);
         $this->end_point = $end_point;
     }
     
@@ -692,8 +697,8 @@ class AgentStormEndpoint extends AgentStormRequest {
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormContactsEndpoint extends AgentStormEndpoint {
-    function __construct($sub_domain, $apikey) {
-        parent::__construct($sub_domain, $apikey, 'contacts');
+    function __construct($sub_domain, $apikey, $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, 'contacts', $raw_mode);
     }
 }
 
@@ -704,8 +709,8 @@ class AgentStormContactsEndpoint extends AgentStormEndpoint {
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
-    function __construct($sub_domain, $apikey) {
-        parent::__construct($sub_domain, $apikey, 'companies');
+    function __construct($sub_domain, $apikey, $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, 'companies', $raw_mode);
     }
 }
 
@@ -717,8 +722,8 @@ class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
  */
 class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
     
-    function __construct($sub_domain, $apikey) {
-        parent::__construct($sub_domain, $apikey, 'properties');
+    function __construct($sub_domain, $apikey, $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, 'properties', $raw_mode);
     }
     
     /**
@@ -742,18 +747,6 @@ class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
         return $this->request(sprintf('/%s/tags/%s.json', $this->end_point, $tag), $filters);
     }
     
-}
-
-/**
- * The AgentStormEndpoint base class for providing common endpoint functions
- *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
- * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
- */
-class AgentStormCitiesEndpoint extends AgentStormEndpoint {
-    function __construct($sub_domain, $apikey) {
-        parent::__construct($sub_domain, $apikey, 'properties/cities');
-    }
 }
 
 
