@@ -631,6 +631,7 @@ abstract class AgentStormRequest {
     private function build_querystring_from_filters($filters = array()) {
         
         //$qs = sprintf('apikey=%s', $this->api_key);
+        $qs = '';
         foreach ($filters as $item) {
             $qs .= '&' . $item->toString();
         }
