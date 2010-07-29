@@ -603,7 +603,7 @@ abstract class AgentStormRequest {
     /**
      * The fomat of the results
      */
-    private $format = '';
+    protected $format = '';
     
     /**
      *
@@ -678,7 +678,7 @@ class AgentStormEndpoint extends AgentStormRequest {
      * Get all the contacts from offset to limit
      */
     public function getAll($offset = 0, $limit = 20) {
-        return $this->request(sprintf('/%s.json', $this->end_point), array(
+        return $this->request(sprintf('/%s.%s', $this->end_point, $this->format), array(
             new AgentStormFilter_Offset($offset),
             new AgentStormFilter_Limit($limit)
         ));
@@ -688,14 +688,14 @@ class AgentStormEndpoint extends AgentStormRequest {
      * Get the Contact with the specified Id
      */
     public function getById($contact_id) {
-        return $this->request(sprintf('/%s/%s.json', $this->end_point, $contact_id), array());
+        return $this->request(sprintf('/%s/%s.%s', $this->end_point, $contact_id, $this->format), array());
     }
     
     /**
      *
      */
     public function search($filters = array()) {
-        return $this->request(sprintf('/%s.json', $this->end_point), $filters);
+        return $this->request(sprintf('/%s.%s', $this->end_point), $filters, $this->format);
     }
     
 }
@@ -740,21 +740,21 @@ class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
      * Cities Endpoint
      */
     public function getCities() {
-        return $this->request(sprintf('/%s/cities.json', $this->end_point), array());
+        return $this->request(sprintf('/%s/cities.%s', $this->end_point, $this->format), array());
     }
     
     /**
      * Get All Tags
      */
     public function getTags() {
-        return $this->request(sprintf('/%s/tags.json', $this->end_point), array());
+        return $this->request(sprintf('/%s/tags.%s', $this->end_point, $this->format), array());
     }
     
     /**
      * Get Properties tagged with $tag
      */
     public function getByTag($tag, $filters = array()) {
-        return $this->request(sprintf('/%s/tags/%s.json', $this->end_point, $tag), $filters);
+        return $this->request(sprintf('/%s/tags/%s.%s', $this->end_point, $tag, $this->format), $filters);
     }
     
 }
