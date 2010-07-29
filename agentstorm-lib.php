@@ -737,8 +737,8 @@ class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
     /**
      * Get Properties tagged with $tag
      */
-    public function getByTag($tag) {
-        return $this->request(sprintf('/%s/tags/%s.json', $this->end_point, $tag), array());
+    public function getByTag($tag, $filters = array()) {
+        return $this->request(sprintf('/%s/tags/%s.json', $this->end_point, $tag), $filters);
     }
     
 }
