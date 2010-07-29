@@ -161,7 +161,7 @@ class AgentStormFilter_LessThan implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value) . '-';
+        return urlencode($this->field) . '=' . urlencode($this->value-1) . '-';
     }
     
 }
@@ -184,7 +184,7 @@ class AgentStormFilter_GreaterThan implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value) . '+'; 
+        return urlencode($this->field) . '=' . urlencode($this->value+1) . '+'; 
     }
     
 }
