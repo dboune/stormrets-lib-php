@@ -138,7 +138,7 @@ class AgentStormFilter_Sort implements AgentStormFilter {
     }
     
     function toString() {
-        return 'sort=' . urlencode($this->field) . '&sort_direction=' . urlencode($this->direction)); 
+        return 'sort=' . urlencode($this->field) . '&sort_direction=' . urlencode($this->direction); 
     }
     
 }
