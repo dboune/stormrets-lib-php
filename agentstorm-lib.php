@@ -128,9 +128,9 @@ class AgentStormFilter_Sort implements AgentStormFilter {
     
     public $direction;
     
-    public static $SORT_PRICE_ASCENDING = 'ASC';
+    public static $SORT_DIRECTION_ASCENDING = 'ASC';
     
-    public static $SORT_PRICE_DESCENDING = 'DESC';
+    public static $SORT_DIRECTION_DESCENDING = 'DESC';
     
     function __construct($field, $directon) {
         $this->field = $field;
@@ -138,7 +138,7 @@ class AgentStormFilter_Sort implements AgentStormFilter {
     }
     
     function toString() {
-        return 'sort=' . urlencode($this->field . ':' . $this->direction); 
+        return 'sort=' . urlencode($this->field) . '&sort_direction=' . urlencode($this->direction)); 
     }
     
 }
