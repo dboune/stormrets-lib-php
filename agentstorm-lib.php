@@ -235,6 +235,33 @@ class AgentStormFilter_In implements AgentStormFilter {
     
 }
 
+class AgentStormFilter_ZipCodeProximity implements AgentStormFilter {
+    
+    const METRIC_KM = 'km';
+    
+    const METRIC_MILES = 'm';
+    
+    public $field;
+    
+    public $zipcode;
+    
+    public $proximity;
+    
+    public $metric;
+    
+    function __construct($field, $zipcode, $proximity, $metric) {
+        $this->field = $field;
+        $this->zipcode = $zipcode;
+        $this->proximity = $proximity;
+        $this->metric = $metric;
+    }
+    
+    function toString() {
+        return urlencode($this->field) . '=s:' . urlencode($this->zipcode) . ':' . urlencode($this->proximity) . ':' . urlencode($this->metric);
+    }
+    
+}
+
 /**
  * The AgentStormHTTPResponse implements a received HTTP response
  *
@@ -687,15 +714,15 @@ class AgentStormEndpoint extends AgentStormRequest {
     /**
      * Get the Contact with the specified Id
      */
-    public function getById($contact_id) {
-        return $this->request(sprintf('/%s/%s.%s', $this->end_point, $contact_id, $this->format), array());
+    public function getById($id) {
+        return $this->request(sprintf('/%s/%s.%s', $this->end_point, $id, $this->format), array());
     }
     
     /**
      *
      */
     public function search($filters = array()) {
-        return $this->request(sprintf('/%s.%s', $this->end_point), $filters, $this->format);
+        return $this->request(sprintf('/%s.%s', $this->end_point, $this->format), $filters, $this->format);
     }
     
 }
@@ -730,6 +757,33 @@ class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
  * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
+class AgentStormUserEndpoint extends AgentStormEndpoint {
+    
+    const ROLE_NONE = 0;
+    
+    const ROLE_AGENT = 10;
+    
+    const ROLE_BROKER = 20;
+    
+    const ROLE_CONTRACTOR = 30;
+    
+    const ROLE_PHOTOGRAPHER = 40;
+    
+    const ROLE_HOMESTAGER = 50;
+    
+    const ROLE_INSURANCEAGENT = 60;
+    
+    function __construct($sub_domain, $apikey, $format = 'json', $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, 'users', $format, $raw_mode);
+    }
+}
+
+/**
+ * The AgentStormEndpoint base class for providing common endpoint functions
+ *
+ * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+ */
 class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
     
     function __construct($sub_domain, $apikey, $format = 'json', $raw_mode = false) {
@@ -755,6 +809,20 @@ class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
      */
     public function getByTag($tag, $filters = array()) {
         return $this->request(sprintf('/%s/tags/%s.%s', $this->end_point, $tag, $this->format), $filters);
+    }
+    
+}
+
+/**
+ * The AgentStormEndpoint base class for providing common endpoint functions
+ *
+ * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+ */
+class AgentStormPropertyTourEndpoint extends AgentStormEndpoint {
+    
+    function __construct($sub_domain, $apikey, $format = 'json', $raw_mode = false) {
+        parent::__construct($sub_domain, $apikey, 'properties/media/virtualtours', $format, $raw_mode);
     }
     
 }
