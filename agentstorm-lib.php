@@ -65,6 +65,7 @@ class AgentStormFilter_Limit implements AgentStormFilter {
     }
     
     function toString() {
+        return sprintf("limit=%s", urlencode($this->limit));
         return '&limit=' . urlencode($this->limit); 
     }
     
@@ -91,7 +92,7 @@ class AgentStormFilter_Range implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->min-1) . ':' . urlencode($this->max+1); 
+        return sprintf("%s=%s:%s", urlencode($this->field), urlencode($this->min), urlencode($this->max));
     }
     
 }
@@ -111,7 +112,7 @@ class AgentStormFilter_Offset implements AgentStormFilter {
     }
     
     function toString() {
-        return 'offset=' . urlencode($this->offset); 
+        return sprintf("offset=%s", urlencode($this->offset));
     }
     
 }
@@ -124,13 +125,16 @@ class AgentStormFilter_Offset implements AgentStormFilter {
  */
 class AgentStormFilter_Sort implements AgentStormFilter {
     
+    
     public $field;
     
     public $direction;
     
-    public static $SORT_DIRECTION_ASCENDING = 'ASC';
     
-    public static $SORT_DIRECTION_DESCENDING = 'DESC';
+    const SORT_DIRECTION_ASCENDING = 'ASC';
+    
+    const SORT_DIRECTION_DESCENDING = 'DESC';
+    
     
     function __construct($field, $directon) {
         $this->field = $field;
@@ -138,7 +142,7 @@ class AgentStormFilter_Sort implements AgentStormFilter {
     }
     
     function toString() {
-        return 'sort=' . urlencode($this->field) . '&sort_direction=' . urlencode($this->direction); 
+        return sprintf("sort=%s&sort_direction=%s", urlencode($this->field), urlencode($this->direction));
     }
     
 }
@@ -161,7 +165,7 @@ class AgentStormFilter_LessThan implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value-1) . '-';
+        return sprintf("%s=%s-", urlencode($this->field), urlencode($this->value));
     }
     
 }
@@ -184,7 +188,7 @@ class AgentStormFilter_GreaterThan implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value+1) . '+'; 
+        return sprintf("%s=%s+", urlencode($this->field), urlencode($this->value));
     }
     
 }
@@ -207,7 +211,7 @@ class AgentStormFilter_Equals implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode($this->value);
+        return sprintf("%s=%s", urlencode($this->field), urlencode($this->value));
     }
     
 }
@@ -230,7 +234,7 @@ class AgentStormFilter_In implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=' . urlencode(join(',', $this->value));
+        return sprintf("%s=%s", urlencode($this->field), urlencode(join(',', $this->value)));
     }
     
 }
@@ -257,7 +261,7 @@ class AgentStormFilter_ZipCodeProximity implements AgentStormFilter {
     }
     
     function toString() {
-        return urlencode($this->field) . '=s:' . urlencode($this->zipcode) . ':' . urlencode($this->proximity) . ':' . urlencode($this->metric);
+        return sprintf("coord=ZipCode:%s:%s:%s", urlencode($this->zipcode), urlencode($this->proximity), urlencode($this->metric));
     }
     
 }
@@ -650,19 +654,16 @@ abstract class AgentStormRequest {
         
         $http = new AgentStormParanoidHTTPFetcher();
         
-        $url = sprintf('http://%s.agentstorm.com%s?%s', $this->sub_domain, $end_point, $this->build_querystring_from_filters($filters));
-        $response = $http->get($url, array(
-            'X-AGENTSTORM-APIKEY: ' . $this->api_key
-        ));
+        $url = sprintf('http://%s.stormrets.com%s?apikey=%s&%s', $this->sub_domain, $end_point, $this->api_key, $this->build_querystring_from_filters($filters));
+        $response = $http->get($url);
         
-        switch ($response->status) {
-            case 200:
-                if ($this->raw_mode == true) {
-                    return $response->body;
-                } else {
-                    return json_decode($response->body);
-                }
-                break;
+        if ($response) {
+            if ($this->raw_mode == true) {
+                return $response->body;
+            } else {
+                return json_decode($response->body);
+            }
+            break;
         }
         
     }
