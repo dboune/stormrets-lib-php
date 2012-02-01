@@ -1,7 +1,7 @@
 <?php
 
 /*
-    Copyright 2009  Agent Storm (email : info@agentstorm.com)
+    Copyright 2009-2012 (email : info@stormrets.com)
 
     ---
 
@@ -33,7 +33,7 @@ define('AGENT_STORM_USER_AGENT', 'agentstorm-lib-php/1.0');
 /**
  * The AgentStormException class represents exceptions raised.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormException extends Exception
@@ -43,7 +43,7 @@ class AgentStormException extends Exception
 /**
  * The AgentStormFilter interface represents classes used to specify result filters.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 interface AgentStormFilter {
@@ -53,7 +53,7 @@ interface AgentStormFilter {
 /**
  * The AgentStormFilter_Limit interface specifies a filter to limit the result.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_Limit implements AgentStormFilter {
@@ -74,7 +74,7 @@ class AgentStormFilter_Limit implements AgentStormFilter {
 /**
  * The AgentStormFilter_Range interface specifies a filter based a range.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_Range implements AgentStormFilter {
@@ -100,7 +100,7 @@ class AgentStormFilter_Range implements AgentStormFilter {
 /**
  * The AgentStormFilter_Offset interface specifies a filter based a offset.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_Offset implements AgentStormFilter {
@@ -120,7 +120,7 @@ class AgentStormFilter_Offset implements AgentStormFilter {
 /**
  * The AgentStormFilter_Sort class specifies a filter on sort the query.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_Sort implements AgentStormFilter {
@@ -150,7 +150,7 @@ class AgentStormFilter_Sort implements AgentStormFilter {
 /**
  * The AgentStormFilter_LessThan class specifies a filter to query a field with a LessThan operator.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_LessThan implements AgentStormFilter {
@@ -173,7 +173,7 @@ class AgentStormFilter_LessThan implements AgentStormFilter {
 /**
  * The AgentStormFilter_GreaterThan class specifies a filter to query a field with a GreaterThan operator.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_GreaterThan implements AgentStormFilter {
@@ -196,7 +196,7 @@ class AgentStormFilter_GreaterThan implements AgentStormFilter {
 /**
  * The AgentStormFilter_Equals class specifies a filter to query a field with an Equals operator.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_Equals implements AgentStormFilter {
@@ -219,7 +219,7 @@ class AgentStormFilter_Equals implements AgentStormFilter {
 /**
  * The AgentStormFilter_In class specifies a filter to query a field where the value is equal to one of the passed array items.
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormFilter_In implements AgentStormFilter {
@@ -239,6 +239,39 @@ class AgentStormFilter_In implements AgentStormFilter {
     
 }
 
+/**
+ * The AgentStormFilter_View class specifies a filter to query a field where the value is equal to one of the passed array items.
+ *
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+ */
+class AgentStormFilter_View implements AgentStormFilter {
+    
+    const PUBLIC = 'public';
+    
+    const IDX = 'idx';
+    
+    const VOW = 'vow';
+    
+    public $view;
+    
+    function __construct($view) {
+        $this->view = $view;
+    }
+    
+    function toString() {
+        return sprintf("view=%s", urlencode($this->view));
+    }
+    
+}
+
+/**
+ * The AgentStormFilter_ZipCodeProximity class specifies a filter to query properties within a zip code radius
+ *
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
+ * @depreciated
+ */
 class AgentStormFilter_ZipCodeProximity implements AgentStormFilter {
     
     const METRIC_KM = 'km';
@@ -269,7 +302,7 @@ class AgentStormFilter_ZipCodeProximity implements AgentStormFilter {
 /**
  * The AgentStormHTTPResponse implements a received HTTP response
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/) some parts Copyright (c) JanRain Inc.
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/) some parts Copyright (c) JanRain Inc.
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormHTTPResponse {
@@ -289,7 +322,7 @@ class AgentStormHTTPResponse {
 /**
  * The AgentStormHTTPFetcher implements basic HTTP Fetcher functionality
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/) some parts Copyright (c) JanRain Inc.
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/) some parts Copyright (c) JanRain Inc.
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormHTTPFetcher {
@@ -417,7 +450,7 @@ class AgentStormHTTPFetcher {
 /**
  * The AgentStormParanoidHTTPFetcher forms a base for all Agent Storm API Endpoints and 
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/) some parts Copyright (c) JanRain Inc.
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/) some parts Copyright (c) JanRain Inc.
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormParanoidHTTPFetcher extends AgentStormHTTPFetcher {
@@ -606,7 +639,7 @@ class AgentStormParanoidHTTPFetcher extends AgentStormHTTPFetcher {
 /**
  * The AgentStormRequest forms a base for all Agent Storm API Endpoints and 
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 abstract class AgentStormRequest {
@@ -687,7 +720,7 @@ abstract class AgentStormRequest {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormEndpoint extends AgentStormRequest {
@@ -731,7 +764,7 @@ class AgentStormEndpoint extends AgentStormRequest {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormContactsEndpoint extends AgentStormEndpoint {
@@ -743,7 +776,7 @@ class AgentStormContactsEndpoint extends AgentStormEndpoint {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
@@ -755,7 +788,7 @@ class AgentStormCompaniesEndpoint extends AgentStormEndpoint {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormUserEndpoint extends AgentStormEndpoint {
@@ -782,7 +815,7 @@ class AgentStormUserEndpoint extends AgentStormEndpoint {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
@@ -817,7 +850,7 @@ class AgentStormPropertiesEndpoint extends AgentStormEndpoint {
 /**
  * The AgentStormEndpoint base class for providing common endpoint functions
  *
- * @copyright  Copyright (c) Agent Storm (http://www.agentstorm.com/)
+ * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 class AgentStormPropertyTourEndpoint extends AgentStormEndpoint {
