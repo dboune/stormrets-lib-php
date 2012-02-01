@@ -1,7 +1,7 @@
 <?php
 
 /*
-    Copyright 2009-2012 (email : info@stormrets.com)
+    Copyright 2009-2012 StormRETS Inc (email : info@stormrets.com)
 
     ---
 
