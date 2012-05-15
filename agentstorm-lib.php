@@ -245,22 +245,10 @@ class AgentStormFilter_In implements AgentStormFilter {
  * @copyright  Copyright (c) StormRETS Inc (http://www.stormrets.com/)
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
-class AgentStormFilter_View implements AgentStormFilter {
-    
-    const PUBLIC = 'public';
-    
-    const IDX = 'idx';
-    
-    const VOW = 'vow';
-    
-    public $view;
+class AgentStormFilter_View {
     
     function __construct($view) {
-        $this->view = $view;
-    }
-    
-    function toString() {
-        return sprintf("view=%s", urlencode($this->view));
+        throw new Exception('AgentStormFilter_View is Depreciated');
     }
     
 }
